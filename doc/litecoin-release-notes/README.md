@@ -1,0 +1,2 @@
+# litecoin-release-notes
+
