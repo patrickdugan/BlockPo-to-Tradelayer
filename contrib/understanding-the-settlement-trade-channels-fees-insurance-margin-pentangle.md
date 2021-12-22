@@ -4,6 +4,10 @@ description: We're going to need a bigger data structure...
 
 # Understanding the Settlement, Trade Channels, Fees, Insurance, Margin Pentangle
 
+
+
+
+
 We pushed the limits of OP\_Return data structures by building out all the scaffolding to get to on-chain derivatives.
 
 Here's how it works:
@@ -34,5 +38,8 @@ Fee behavior along with the bi-direction Channel trade clearing is defined in md
 
 We need to add an insurance.cpp/.h to define the input/output functions for the fees going in and the short-covers or payouts coming out it.
 
-Much of this is on mdex.cpp, the settlement part is in the middle of tradelayer.cpp
+Much of this is on mdex.cpp, the settlement part is in the middle of tradelayer.cpp\
+
+
+The original settlement culminated in a couple of functions at the end of the waterfall chain of functions in clearing.cpp - these functions would calculate a PNL value based on an inverse-quoting or linear formula and apply it to the tally map for both parties. Now we define a settlement function inside tradelayer.ccp that does the same.
 
