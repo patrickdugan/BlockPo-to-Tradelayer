@@ -104,7 +104,18 @@ std::map<int, P64> GetVWAPSamples(const std::map<int, V64>& data, std::initializ
 int64_t AntiWashFilter(const Channels& data, const std::string& address, uint32_t pid)
 {
     // RoundDown(WeighedAvg(Volatility_Samples)%0.005+1)
-
+    //first get the volatility %
+    
+    //I'm confused by the flow here because it seems like you're looping for different values of the volatility parameters... but 
+    //this function takes a single pid, so the commented out first line is what I'd expect there.
+    
+    //here we'll make a math soup of these volatility samples
+    // int nBlocks = min(((vol50+vol10)/2),(vol00+vol500+vol1000)/3)) 
+    // this maybe is a dumb formula but it's easy to change
+    
+    //this kind of loop could be useful for producing the map passed to GetVWAPSamples, 
+    //but I think you'd want to call FindChannelTrade insight the GetVWAPSample?
+    //they could both work
     for (auto b : {10, 50, 100, 500, 1000})
     {
         if (!FindChannelTrade(data, address, pid, b))
@@ -113,6 +124,9 @@ int64_t AntiWashFilter(const Channels& data, const std::string& address, uint32_
 
     //auto vmmap = tl::GetVWAPSamples(c->second, {10, 50, 100, 500, 1000}); 
     
+    //here we might also take the nBlocks value and calculate an associated increase in the on-chain orderbook fees/rebate, but let's save that for another iteration
+    
+    //here you'd return the integer value for the filtered VWAP
     return 0;
 }
 
